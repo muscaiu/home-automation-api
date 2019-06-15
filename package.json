@@ -12,6 +12,7 @@
     "axios": "^0.19.0",
     "cron": "^1.7.1",
     "firebase-admin": "^8.1.0",
+    "homebridge-mi-hygrothermograph": "^2.2.1",
     "socket.io": "^2.2.0",
     "winston": "^3.2.1"
   }

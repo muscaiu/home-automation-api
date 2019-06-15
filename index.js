@@ -2,9 +2,9 @@ const io = require('socket.io')();
 const logger = require('./logger');
 const cronLiving = require('./cron/cronLiving');
 const cronBedroom = require('./cron/cronBedroom');
-const getLivingStatus = require('./getLivingStatus')
+// const getLivingStatus = require('./getLivingStatus')
 // const getBedroomData = require('./getBedroomData');
-const { messaging } = require('./firebaseRefs');
+// const { messaging } = require('./firebaseRefs');
 
 const { Scanner } = require("homebridge-mi-hygrothermograph/lib/scanner");
 const scanner = new Scanner();
@@ -18,6 +18,7 @@ io.set("origins", "*:*");
 const bedroomId = '4c65a8daa726'
 const kitchenId = '4c65a8dd7c37'
 const vladId = '4c65a8dae1b7'
+const livingId = '4c65a8dd7fc9'
 
 io.on('connection', (client) => {
   //BedRoom
@@ -29,6 +30,9 @@ io.on('connection', (client) => {
         client.emit('temperatureKitchen', temperature)
       } else if (peripheral.id === vladId) {
         client.emit('temperatureVlad', temperature)
+      } else if (peripheral.id === livingId) {
+        console.log(temperature)
+        client.emit('temperatureLiving', temperature)
       }
     });
   });
@@ -40,27 +44,29 @@ io.on('connection', (client) => {
         client.emit('humidityKitchen', humidity)
       } else if (peripheral.id === vladId) {
         client.emit('humidityVlad', humidity)
+      } else if (peripheral.id === livingId) {
+        client.emit('humidityLiving', humidity)
       }
     });
   });
 
   //Living
-  client.on('subscribeToLiving', (interval) => {
-    getLivingStatus()
-      .then(data => {
-        client.emit('livingData', data)
-      });
-    setInterval(() => {
-      getLivingStatus()
-        .then(data => {
-          client.emit('livingData', data)
-        });
-    }, interval);
-  });
-  //toggle
-  client.on('toggle', () => {
-    axios.get('http://192.168.1.12/cm?cmnd=Power%20TOGGLE')
-  });
+  // client.on('subscribeToLiving', (interval) => {
+  //   getLivingStatus()
+  //     .then(data => {
+  //       client.emit('livingData', data)
+  //     });
+  //   setInterval(() => {
+  //     getLivingStatus()
+  //       .then(data => {
+  //         client.emit('livingData', data)
+  //       });
+  //   }, interval);
+  // });
+  // //toggle
+  // client.on('toggle', () => {
+  //   axios.get('http://192.168.1.12/cm?cmnd=Power%20TOGGLE')
+  // });
 });
 
 // const registrationToken = 'e_3cLAb3BAI:APA91bFFTTMEKbVj4gSK-Ax1o52PopWf1xRO6dZGYUddD_NDWcehbsBQpO3RdV-63G2HvoGvnRju68JuVfT5fSHGKledrLZ29UB91f7hf97FyYOu1XkOg737QBnd93J9OemvsiO7IpDY'
