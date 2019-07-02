@@ -1,8 +1,8 @@
 import 'dotenv/config';
 const io = require('socket.io')();
 
-import bedroomScanner from './scanners/bedroomScanner';
 import livingScanner from './scanners/livingScanner';
+import bedroomScanner from './scanners/bedroomScanner';
 import vladScanner from './scanners/vladScanner';
 import kitchenScanner from './scanners/kitchenScanner';
 
