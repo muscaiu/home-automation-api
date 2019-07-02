@@ -1,16 +1,25 @@
 {
-  "name": "y",
+  "name": "home-automation-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon --exec babel-node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Cristian Muscalu <muscaiu@yahoo.com> (cristian.muscalu.net)",
   "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "nodemon": "^1.19.1"
+  },
   "dependencies": {
     "axios": "^0.19.0",
     "cron": "^1.7.1",
+    "dotenv": "^8.0.0",
     "firebase-admin": "^8.1.0",
     "homebridge-mi-hygrothermograph": "^2.2.1",
     "socket.io": "^2.2.0",
