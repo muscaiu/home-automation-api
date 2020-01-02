@@ -2,7 +2,7 @@ import 'dotenv/config';
 const io = require('socket.io')();
 
 import livingScanner from './scanners/livingScanner';
-import bedroomScanner from './scanners/bedroomScanner';
+import bathroomScanner from './scanners/bathroomScanner';
 import vladScanner from './scanners/vladScanner';
 import kitchenScanner from './scanners/kitchenScanner';
 
@@ -10,7 +10,7 @@ io.set("origins", "*:*");
 
 io.on('connection', (client) => {
   livingScanner(client)
-  bedroomScanner(client)
+  bathroomScanner(client)
   vladScanner(client)
   kitchenScanner(client)
 });

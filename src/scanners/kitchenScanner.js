@@ -1,12 +1,11 @@
 import { Scanner } from "homebridge-mi-hygrothermograph/lib/scanner";
 
-const kitchenId = '4c65a8dd7c37';
+const kitchenId = '4c65a8dae1b7';
 const log = { debug() { }, error() { }, warn() { }, info() { } };
 const kitchenScanner = new Scanner(kitchenId, { log });
 
 export default function (client) {
   kitchenScanner.on("temperatureChange", function (temperature, id) {
-    console.log('temperatureKitchen', temperature);
     client.emit('temperatureKitchen', temperature)
   });
 
