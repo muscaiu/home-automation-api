@@ -6,9 +6,19 @@ import bathroomScanner from './scanners/bathroomScanner';
 import vladScanner from './scanners/vladScanner';
 import kitchenScanner from './scanners/kitchenScanner';
 
+import {tempCron} from './crons/tempCron';
+import models, { sequelize } from './models';
+
+tempCron.start();
+
 io.set("origins", "*:*");
 
 io.on('connection', (client) => {
+  livingScanner(client)
+  bathroomScanner(client)
+  vladScanner(client)
+  kitchenScanner(client)
+
   client.on('toggleLiving', () => {
     var spawn = require("child_process").spawn;
     
@@ -18,11 +28,11 @@ io.on('connection', (client) => {
       console.log(data.toString())
     })
   });
-  livingScanner(client)
-  bathroomScanner(client)
-  vladScanner(client)
-  kitchenScanner(client)
+
+  sequelize.sync().then(async () => {
+    console.log('+++ DB connected')
+  });
+  
 });
 
-const port = 4001;
-io.listen(port);
+io.listen(process.env.PORT);
