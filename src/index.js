@@ -22,6 +22,7 @@ io.on('connection', (client) => {
   kitchenScanner(client)
 
   client.on('toggleLiving', () => {
+    console.log('toggleLiving')
     var spawn = require("child_process").spawn;
     const process = spawn('python', ["./livolo.py", 'on']);
     process.stdout.on('data', function (data) {
@@ -29,19 +30,42 @@ io.on('connection', (client) => {
     })
   });
 
+  // client.on('toggleEntrance', () => {
+  //   console.log('toggleEntrance:')
+  //   var spawn = require("child_process").spawn;
+  //   const process = spawn('python', ["./livolo_entrance.py", 'on']);
+  //   process.stdout.on('data', function (data) {
+  //     console.log(data.toString())
+  //   })
+  // });
+
   client.on('getTemperatures',  async() => {
-    const tremperatures = await models.Temperature.findAll({
+    const living = await models.Living.findAll({
       limit: 100,
       where: {},
-      order: [['createdAt', 'ASC']]
+      order: [['createdAt', 'DESC']]
     })
-    client.emit('temperatures', tremperatures)
+    const kitchen = await models.Kitchen.findAll({
+      limit: 100,
+      where: {},
+      order: [['createdAt', 'DESC']]
+    })
+    const vlad = await models.Vlad.findAll({
+      limit: 100,
+      where: {},
+      order: [['createdAt', 'DESC']]
+    })
+    const bathroom = await models.Bathroom.findAll({
+      limit: 100,
+      where: {},
+      order: [['createdAt', 'DESC']]
+    })
+    client.emit('temperatures', {living, kitchen, vlad, bathroom})
   })
 
   sequelize.sync().then(async () => {
     console.log('+++ DB connected')
   });
-  
 });
 
 server.listen(process.env.PORT);

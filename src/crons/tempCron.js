@@ -48,21 +48,35 @@ vladScanner.on("humidityChange", function (humidity, id) {
   vladHumidity = humidity;
 });
 
-//Hourly Temp and Status
-const tempCron = new CronJob(`0 */10 * * * *`, async function () {
+// Every minute
+const tempCron = new CronJob(`0 * * * * *`, async function () {
   console.log(new Date().toLocaleTimeString())
-  await models.Temperature.create({
-    livingTemperature: livingTemperature,
-    livingHumidity: livingHumidity,
-    kitchenTemperature: kitchenTemperature,
-    kitchenHumidity: kitchenHumidity,
-    bathroomTemperature: bathroomTemperature,
-    bathroomHumidity: bathroomHumidity,
-    vladTemperature: vladTemperature,
-    vladHumidity: vladHumidity,
+  await models.Living.create({
+    temperature: livingTemperature,
+    humidity : livingHumidity,
+  });
+  await models.Kitchen.create({
+    temperature: kitchenTemperature,
+    humidity : kitchenHumidity,
+  });
+  await models.Vlad.create({
+    temperature: vladTemperature,
+    humidity : vladHumidity,
+  });
+  await models.Bathroom.create({
+    temperature: bathroomTemperature,
+    humidity : bathroomHumidity,
   });
 });
 
 module.exports = {
   tempCron,
+  livingTemperature,
+  livingHumidity,
+  kitchenTemperature,
+  kitchenHumidity,
+  bathroomTemperature,
+  bathroomHumidity,
+  vladTemperature,
+  vladHumidity,
 };

@@ -11,7 +11,10 @@ const sequelize = new Sequelize(
 );
 
 const models = {
-  Temperature: sequelize.import('./temperature'),
+  Living: sequelize.import('./living'),
+  Kitchen: sequelize.import('./kitchen'),
+  Vlad: sequelize.import('./vlad'),
+  Bathroom: sequelize.import('./bathroom'),
   User: sequelize.import('./user'),
 };
 
