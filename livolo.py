@@ -13,6 +13,7 @@ else:
 TRANSMIT_PIN = 17
 
 def transmit_code(code):
+    print('code ' + code)
     '''Transmit a chosen code string using the GPIO transmitter'''
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(TRANSMIT_PIN, GPIO.OUT)

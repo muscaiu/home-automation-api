@@ -1,5 +1,5 @@
 const living = (sequelize, DataTypes) => {
-  const Living = sequelize.define('living', {
+  const Living = sequelize.define("living", {
     temperature: DataTypes.DECIMAL,
     humidity: DataTypes.DECIMAL,
   });

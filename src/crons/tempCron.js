@@ -1,13 +1,13 @@
 import { Scanner } from "homebridge-mi-hygrothermograph/lib/scanner";
-import models from '../models';
+import models from "../models";
 
-const CronJob = require('cron').CronJob;
-const log = { debug() { }, error() { }, warn() { }, info() { } };
+const CronJob = require("cron").CronJob;
+const log = { debug() {}, error() {}, warn() {}, info() {} };
 
-const livingId = '4c65a8daa726';
-const kitchenId = '4c65a8dae1b7';
-const vladId = '4c65a8dd7fc9';
-const bathroomId = '4c65a8dd7c37';
+const livingId = "4c65a8daa726";
+const kitchenId = "4c65a8dae1b7";
+const vladId = "4c65a8dd7fc9";
+const bathroomId = "4c65a8dd7c37";
 
 const livingScanner = new Scanner(livingId, { log });
 const kitchenScanner = new Scanner(kitchenId, { log });
@@ -50,22 +50,22 @@ vladScanner.on("humidityChange", function (humidity, id) {
 
 // Every minute
 const tempCron = new CronJob(`0 * * * * *`, async function () {
-  console.log(new Date().toLocaleTimeString())
+  console.log(new Date().toLocaleTimeString());
   await models.Living.create({
     temperature: livingTemperature,
-    humidity : livingHumidity,
+    humidity: livingHumidity,
   });
   await models.Kitchen.create({
     temperature: kitchenTemperature,
-    humidity : kitchenHumidity,
+    humidity: kitchenHumidity,
   });
   await models.Vlad.create({
     temperature: vladTemperature,
-    humidity : vladHumidity,
+    humidity: vladHumidity,
   });
   await models.Bathroom.create({
     temperature: bathroomTemperature,
-    humidity : bathroomHumidity,
+    humidity: bathroomHumidity,
   });
 });
 
